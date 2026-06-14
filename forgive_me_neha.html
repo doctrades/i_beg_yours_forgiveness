@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #ffecd2 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Segoe UI', sans-serif;
+    padding: 20px;
+  }
+
+  .card {
+    background: white;
+    border-radius: 24px;
+    padding: 40px 36px;
+    max-width: 520px;
+    width: 100%;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 6px;
+    background: linear-gradient(90deg, #ff6b9d, #ffa07a, #ff6b9d);
+  }
+
+  .emoji-big {
+    font-size: 64px;
+    display: block;
+    margin-bottom: 12px;
+    animation: bounce 1.5s infinite;
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+
+  h1 {
+    font-size: 22px;
+    color: #d63384;
+    margin-bottom: 20px;
+    font-weight: 700;
+  }
+
+  .message {
+    font-size: 15px;
+    color: #555;
+    line-height: 1.8;
+    background: #fff5f8;
+    border-radius: 16px;
+    padding: 20px;
+    border-left: 4px solid #ff6b9d;
+    text-align: left;
+    margin-bottom: 28px;
+  }
+
+  .message strong {
+    color: #d63384;
+  }
+
+  .question {
+    font-size: 20px;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 24px;
+  }
+
+  .btn-row {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+
+  .btn-yes {
+    background: linear-gradient(135deg, #ff6b9d, #ff8c69);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    padding: 14px 40px;
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 15px rgba(255,107,157,0.4);
+  }
+
+  .btn-yes:hover {
+    transform: scale(1.07);
+    box-shadow: 0 6px 20px rgba(255,107,157,0.5);
+  }
+
+  .btn-yes:active {
+    transform: scale(0.97);
+  }
+
+  .btn-no {
+    background: #f0f0f0;
+    color: #999;
+    border: 2px dashed #ccc;
+    border-radius: 50px;
+    padding: 14px 40px;
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.15s;
+    position: relative;
+  }
+
+  .confetti-container {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    pointer-events: none;
+    z-index: 999;
+    display: none;
+  }
+
+  .confetti-piece {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    top: -10px;
+    animation: fall linear forwards;
+  }
+
+  @keyframes fall {
+    to { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+  }
+
+  .win-screen {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .win-screen h2 {
+    font-size: 28px;
+    color: #d63384;
+    font-weight: 800;
+  }
+
+  .win-screen p {
+    font-size: 16px;
+    color: #666;
+  }
+
+  .win-emoji {
+    font-size: 80px;
+    animation: spin 1s ease-out;
+  }
+
+  @keyframes spin {
+    from { transform: rotate(-30deg) scale(0.5); }
+    to { transform: rotate(0deg) scale(1); }
+  }
+
+  /* Popup overlay */
+  .overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .overlay.show { display: flex; }
+
+  .popup {
+    background: white;
+    border-radius: 20px;
+    padding: 32px;
+    max-width: 380px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    animation: popIn 0.3s cubic-bezier(0.34,1.56,0.64,1);
+  }
+
+  @keyframes popIn {
+    from { transform: scale(0.5); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+
+  .popup-emoji { font-size: 48px; margin-bottom: 10px; display: block; }
+  .popup-title { font-size: 20px; font-weight: 700; color: #d63384; margin-bottom: 10px; }
+  .popup-msg { font-size: 14px; color: #666; line-height: 1.6; margin-bottom: 20px; }
+
+  .popup-btn {
+    background: linear-gradient(135deg, #ff6b9d, #ff8c69);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    padding: 12px 32px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    width: 100%;
+  }
+
+  .popup-btn:hover { opacity: 0.9; }
+</style>
+</head>
+<body>
+
+<div class="card" id="main-card">
+  <span class="emoji-big">🥺</span>
+  <h1>I messed up. Big time. 😔</h1>
+
+  <div class="message">
+    Heyy I'm very sorry <strong>Neha</strong>.. I didn't mean to make you angry. 💔<br><br>
+    I admit it was my mistake. I should have understood you wanted to talk and it was my fault that I kept answering with stickers. 🙈<br><br>
+    I'm still learning all these things.. I want to be better for you. <strong>Please forgive meee</strong> 🙏🥺
+  </div>
+
+  <div class="question">So... do you forgive me? 🥺👉👈</div>
+
+  <div class="btn-row">
+    <button class="btn-yes" onclick="onYes()">✅ Yes, I forgive you</button>
+    <button class="btn-no" id="noBtn" onmouseenter="runAway()" ontouchstart="runAway()">❌ No</button>
+  </div>
+
+</div>
+
+<!-- Win screen (hidden initially) -->
+<div class="card win-screen" id="win-card">
+  <span class="win-emoji">🎉</span>
+  <h2>Yayyyy!! 🥳</h2>
+  <p style="font-size: 18px; color: #d63384; font-weight: 600;">Thank you soooooooo much 💖</p>
+  <p style="font-size: 15px; color: #888; margin-top: 8px;">I will do that again.... and any thing that hurt you...... 💕<br>I  love you 10,000😘</p>
+</div>
+
+<!-- Confetti -->
+<div class="confetti-container" id="confetti"></div>
+
+<!-- Popup overlay -->
+<div class="overlay" id="overlay">
+  <div class="popup" id="popup">
+    <span class="popup-emoji" id="popupEmoji">🥺</span>
+    <div class="popup-title" id="popupTitle">Wait wait wait—</div>
+    <div class="popup-msg" id="popupMsg">Are you sure? Because I'm not. Please reconsider 🙏</div>
+    <button class="popup-btn" onclick="closePopup()">Okay fine... let me think again</button>
+  </div>
+</div>
+
+<script>
+  const noMessages = [
+    { emoji: "🥺", title: "Babe no—", msg: "The No button is having an existential crisis. Please don't click it again. It cries." },
+    { emoji: "😭", title: "NEHA PLEASE—", msg: "Okay but real talk. I sent stickers. STICKERS. That's basically sign language for 'I love you but I'm awkward'. Forgive me pzzzzzz??" },
+    { emoji: "🐶", title: "Look at this dog—", msg: "This dog also thinks you should forgive me. Don't let the dog down, Neha. 🐕" },
+    { emoji: "🌚", title: "The No button has been arrested.", msg: "You are now legally required to press Yes. This is a court order from the Ministry of Forgiveness." },
+    { emoji: "😤", title: "Okay be like that—", msg: "Fine. But just know the sticker i sent was probably a heart and that counts as a love confession. Think about it." },
+    { emoji: "🫣", title: "He's watching—", msg: "I built this whole page JUST for you. With my own two thumbs. On mobile probably. Please have mercy 😭" },
+    { emoji: "🧎", title: "Bro is on his knees—", msg: "Not literally but emotionally? 100%. I am emotionally kneeling, Neha. EMOTIONALLY KNEELING." },
+    { emoji: "💀", title: "The No button died—", msg: "R.I.P No Button (2025 - 2025). Survived by Yes Button, who is doing great and would love your click." },
+    { emoji: "🫶", title: "Last chance—", msg: "Studies show that forgiving someone improves your mood by 400%. Scientists also say stickers are a valid form of communication. (Okay I made that up but still 🥺)" },
+  ];
+
+  let noCount = 0;
+  let isRunning = false;
+
+  function runAway() {
+    if (isRunning) return;
+    isRunning = true;
+    const btn = document.getElementById('noBtn');
+    const card = document.getElementById('main-card');
+    const cardRect = card.getBoundingClientRect();
+    const btnRect = btn.getBoundingClientRect();
+
+    const maxX = cardRect.width - btnRect.width - 16;
+    const maxY = 60;
+
+    const rx = Math.floor(Math.random() * maxX);
+    const ry = Math.floor(Math.random() * maxY) - 30;
+
+    btn.style.position = 'relative';
+    btn.style.left = (rx - (btnRect.left - cardRect.left)) + 'px';
+    btn.style.top = ry + 'px';
+    btn.style.transition = 'left 0.2s, top 0.2s';
+
+    setTimeout(() => {
+      isRunning = false;
+      showPopup();
+    }, 300);
+  }
+
+  function showPopup() {
+    const idx = noCount % noMessages.length;
+    const m = noMessages[idx];
+    noCount++;
+    document.getElementById('popupEmoji').textContent = m.emoji;
+    document.getElementById('popupTitle').textContent = m.title;
+    document.getElementById('popupMsg').textContent = m.msg;
+    document.getElementById('overlay').classList.add('show');
+  }
+
+  function closePopup() {
+    document.getElementById('overlay').classList.remove('show');
+    const btn = document.getElementById('noBtn');
+    btn.style.left = '0px';
+    btn.style.top = '0px';
+  }
+
+  function onYes() {
+    document.getElementById('main-card').style.display = 'none';
+    const win = document.getElementById('win-card');
+    win.style.display = 'flex';
+    launchConfetti();
+  }
+
+  function launchConfetti() {
+    const container = document.getElementById('confetti');
+    container.style.display = 'block';
+    const colors = ['#ff6b9d','#ffa07a','#ffeb3b','#a8e6cf','#d4a8ff','#ff9a9e'];
+    for (let i = 0; i < 80; i++) {
+      const el = document.createElement('div');
+      el.className = 'confetti-piece';
+      el.style.left = Math.random() * 100 + 'vw';
+      el.style.background = colors[Math.floor(Math.random() * colors.length)];
+      el.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+      el.style.width = (8 + Math.random() * 8) + 'px';
+      el.style.height = (8 + Math.random() * 8) + 'px';
+      el.style.animationDuration = (1.5 + Math.random() * 2) + 's';
+      el.style.animationDelay = (Math.random() * 0.8) + 's';
+      container.appendChild(el);
+    }
+    setTimeout(() => container.style.display = 'none', 4000);
+  }
+</script>
+</body>
+</html>
