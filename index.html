@@ -1,492 +1,445 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Sorry Neha ❤️</title>
-
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        body {
-            min-height: 100vh;
-            padding: 18px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-
-            background:
-                linear-gradient(135deg,
-                    #ffb6c1,
-                    #ffd6e7,
-                    #ffe9d6);
-
-            font-family:
-                system-ui,
-                -apple-system,
-                BlinkMacSystemFont,
-                sans-serif;
-            overflow-x: hidden;
-        }
-
-        .card {
-            width: min(100%, 520px);
-
-            background: white;
-
-            border-radius: 28px;
-
-            padding:
-                26px 22px;
-
-            box-shadow:
-                0 20px 60px rgba(0, 0, 0, .15);
-
-            text-align: center;
-
-            position: relative;
-
-            overflow: hidden;
-        }
-
-        .card::before {
-            content: "";
-
-            position: absolute;
-
-            top: 0;
-            left: 0;
-
-            width: 100%;
-            height: 6px;
-
-            background:
-                linear-gradient(90deg,
-                    #ff6b9d,
-                    #ff8c69);
-        }
-
-        .emoji {
-            font-size: 60px;
-            animation: float 2s infinite;
-        }
-
-        @keyframes float {
-            50% {
-                transform:
-                    translateY(-8px);
-            }
-        }
-
-        h1 {
-            margin-top: 12px;
-
-            font-size:
-                clamp(24px,
-                    5vw,
-                    30px);
-
-            color: #d63384;
-
-            margin-bottom: 18px;
-        }
-
-        .message {
-
-            background: #fff6fa;
-
-            padding: 22px;
-
-            border-radius: 18px;
-
-            line-height: 1.9;
-
-            color: #555;
-
-            font-size: 15px;
-
-            text-align: left;
-
-            border-left:
-                5px solid #ff6b9d;
-
-            margin-top: 12px;
-        }
-
-        .message strong {
-            color: #d63384;
-        }
-
-        .question {
-
-            margin-top: 24px;
-
-            font-size: 20px;
-
-            font-weight: 800;
-
-            color: #333;
-        }
-
-        .btns {
-
-            margin-top: 22px;
-
-            display: flex;
-
-            gap: 14px;
-
-            justify-content: center;
-
-            flex-wrap: wrap;
-        }
-
-        button {
-
-            border: none;
-
-            cursor: pointer;
-
-            font-size: 16px;
-
-            font-weight: 700;
-
-            padding: 14px 24px;
-
-            border-radius: 999px;
-
-            transition: .2s;
-        }
-
-        .yes {
-
-            background:
-                linear-gradient(135deg,
-                    #ff6b9d,
-                    #ff8c69);
-
-            color: white;
-
-            box-shadow:
-                0 8px 20px rgba(255, 107, 157, .4);
-        }
-
-        .yes:hover {
-            transform:
-                scale(1.05);
-        }
-
-        .no {
-
-            background: #f4f4f4;
-
-            color: #888;
-
-            border:
-                2px dashed #ccc;
-
-            position: relative;
-        }
-
-        .overlay {
-
-            display: none;
-
-            position: fixed;
-
-            inset: 0;
-
-            background:
-                rgba(0, 0, 0, .45);
-
-            padding: 18px;
-
-            align-items: center;
-
-            justify-content: center;
-
-            z-index: 999;
-        }
-
-        .overlay.show {
-            display: flex;
-        }
-
-        .popup {
-
-            width: min(100%,
-                    360px);
-
-            background: white;
-
-            padding: 28px;
-
-            border-radius: 24px;
-
-            text-align: center;
-
-            animation: pop .3s;
-        }
-
-        @keyframes pop {
-            from {
-                opacity: 0;
-                transform: scale(.6);
-            }
-
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-
-        .popup span {
-            font-size: 50px;
-        }
-
-        .popup h3 {
-            margin: 12px 0;
-            color: #d63384;
-        }
-
-        .popup p {
-            color: #666;
-            line-height: 1.7;
-        }
-
-        .popup button {
-
-            margin-top: 16px;
-
-            width: 100%;
-
-            background:
-                linear-gradient(135deg,
-                    #ff6b9d,
-                    #ff8c69);
-
-            color: white;
-        }
-
-        .win {
-
-            display: none;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .win h2 {
-            font-size: 34px;
-            color: #d63384;
-        }
-
-        .win p {
-            color: #666;
-            line-height: 1.8;
-        }
-
-        @media(max-width:480px) {
-
-            .message {
-                font-size: 14px;
-            }
-
-            button {
-                width: 100%;
-            }
-
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Sorry Neha ❤️</title>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+  :root {
+    --pink: #ff6b9d;
+    --peach: #ff8c69;
+    --rose: #d63384;
+    --soft: #fff0f6;
+  }
+
+  body {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px 16px 40px;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #ffe4ef;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  /* Floating hearts background */
+  .bg-hearts {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 0;
+  }
+  .bh {
+    position: absolute;
+    font-size: 22px;
+    opacity: 0.12;
+    animation: floatUp linear infinite;
+  }
+  @keyframes floatUp {
+    0%   { transform: translateY(110vh) rotate(0deg); opacity: 0; }
+    10%  { opacity: 0.12; }
+    90%  { opacity: 0.12; }
+    100% { transform: translateY(-10vh) rotate(40deg); opacity: 0; }
+  }
+
+  /* Card */
+  .card {
+    position: relative;
+    z-index: 1;
+    width: min(100%, 500px);
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 32px;
+    padding: 32px 22px 28px;
+    box-shadow: 0 24px 64px rgba(214,51,132,0.18), 0 4px 16px rgba(255,107,157,0.12);
+    text-align: center;
+    border: 1.5px solid rgba(255,107,157,0.18);
+  }
+
+  /* Top accent bar */
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 5px;
+    border-radius: 32px 32px 0 0;
+    background: linear-gradient(90deg, #ff6b9d, #ffb347, #ff6b9d);
+    background-size: 200% 100%;
+    animation: shimmer 3s linear infinite;
+  }
+  @keyframes shimmer { to { background-position: -200% 0; } }
+
+  /* Emoji */
+  .main-emoji {
+    font-size: 62px;
+    display: block;
+    margin-bottom: 4px;
+    animation: float 2.4s ease-in-out infinite;
+    filter: drop-shadow(0 4px 10px rgba(255,107,157,0.3));
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0) rotate(-3deg); }
+    50%       { transform: translateY(-10px) rotate(3deg); }
+  }
+
+  h1 {
+    font-size: clamp(20px, 5vw, 26px);
+    color: var(--rose);
+    font-weight: 800;
+    margin: 10px 0 18px;
+    letter-spacing: -0.3px;
+  }
+
+  /* Message box */
+  .message {
+    background: var(--soft);
+    border-left: 5px solid var(--pink);
+    border-radius: 0 18px 18px 0;
+    padding: 18px 16px;
+    font-size: 14.5px;
+    color: #555;
+    line-height: 1.95;
+    text-align: left;
+    position: relative;
+  }
+  .message strong { color: var(--rose); }
+
+  /* Tags / pills */
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    margin: 20px 0 4px;
+  }
+  .tag {
+    background: linear-gradient(135deg, #ffe0ee, #ffd6c8);
+    color: var(--rose);
+    font-size: 12px;
+    font-weight: 700;
+    padding: 5px 14px;
+    border-radius: 999px;
+    border: 1px solid rgba(255,107,157,0.2);
+  }
+
+  .question {
+    font-size: 19px;
+    font-weight: 800;
+    color: #333;
+    margin: 18px 0 22px;
+  }
+
+  /* Buttons */
+  .btns {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  button {
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 700;
+    padding: 14px 28px;
+    border-radius: 999px;
+    transition: transform .18s, box-shadow .18s;
+    letter-spacing: 0.3px;
+  }
+
+  .yes {
+    background: linear-gradient(135deg, #ff6b9d, #ff8c69);
+    color: white;
+    box-shadow: 0 8px 22px rgba(255,107,157,.45);
+    min-width: 130px;
+  }
+  .yes:hover  { transform: scale(1.06); box-shadow: 0 12px 28px rgba(255,107,157,.55); }
+  .yes:active { transform: scale(0.97); }
+
+  .no {
+    background: #f4f4f4;
+    color: #999;
+    border: 2px dashed #ddd;
+    min-width: 110px;
+    position: relative;
+  }
+
+  .fine-print {
+    margin-top: 14px;
+    font-size: 11px;
+    color: #ccc;
+  }
+
+  /* Win screen */
+  .win-card {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    animation: popIn .5s cubic-bezier(.34,1.56,.64,1);
+  }
+  .win-card h2 { font-size: clamp(24px,6vw,32px); color: var(--rose); font-weight: 800; }
+  .win-card p  { color: #666; line-height: 1.85; font-size: 15px; }
+
+  @keyframes popIn {
+    from { opacity: 0; transform: scale(.7) rotate(-5deg); }
+    to   { opacity: 1; transform: scale(1) rotate(0deg); }
+  }
+
+  /* Overlay + Popup */
+  .overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.45);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    z-index: 9999;
+  }
+  .overlay.show { display: flex; }
+
+  .popup {
+    width: min(100%, 340px);
+    background: white;
+    border-radius: 28px;
+    padding: 30px 24px;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(0,0,0,.2);
+    animation: popIn .3s cubic-bezier(.34,1.56,.64,1);
+    border: 1.5px solid rgba(255,107,157,0.15);
+  }
+  .popup span { font-size: 52px; display: block; margin-bottom: 10px; }
+  .popup h3   { color: var(--rose); font-size: 18px; margin-bottom: 10px; }
+  .popup p    { color: #666; line-height: 1.7; font-size: 14px; }
+  .popup button {
+    margin-top: 18px;
+    width: 100%;
+    background: linear-gradient(135deg, #ff6b9d, #ff8c69);
+    color: white;
+    padding: 13px;
+    font-size: 15px;
+    box-shadow: 0 6px 18px rgba(255,107,157,.35);
+  }
+  .popup button:hover { transform: scale(1.03); }
+
+  /* Confetti canvas */
+  #confetti-canvas {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9998;
+    display: none;
+  }
+
+  @media (max-width: 400px) {
+    .card { padding: 28px 16px 24px; }
+    .message { font-size: 13.5px; }
+    .btns button { width: 100%; }
+  }
+</style>
 </head>
-
 <body>
 
-    <div class="card" id="main">
-
-        <div class="emoji">🥺</div>
-
-        <h1>Operation: Win Back Neha ❤️</h1>
-
-
-        <div class="message">
-
-            Heyy <strong>Neha</strong> ❤️🥺<br><br>
-
-            Okay… my <strong>sweetheart</strong>, my <strong>cupcake</strong>, my favorite human 😭❤️<br><br>
-
-            I owe you a real apology.<br><br>
-
-            I know you're angry and honestly… you have every right to be.
-
-            I sent that stupid funny sticker thinking I was being cute and goofy 😭 but I completely missed that you
-            actually wanted to talk properly.<br><br>
-
-            Instead of understanding you and being there for you, I kept acting silly and replying with stickers 🙈
-
-            That probably made you feel ignored or like I wasn't taking you seriously… and baby, that wasn't my
-            intention at all 💔<br><br>
-
-            I wasn't trying to annoy you or make fun of your feelings.
-
-            I just had terrible timing and handled the moment badly 😔<br><br>
-
-            You're important to me, <strong>pretty girl</strong>. More than my dumb sticker addiction 😭❤️<br><br>
-
-            So I'm genuinely sorry.
-
-            Next time I'll listen first and activate boyfriend mode before comedian mode 🫡💖<br><br>
-
-            Please forgive me, <strong>baby</strong>? 🥺👉👈<br>
-
-            Your emotionally damaged sticker boy is waiting 😭❤️
-
-        </div>
-
-
-
-        <div class="question">
-            So… do you forgive me?
-            🥺
-        </div>
-
-        <div class="btns">
-
-            <button class="yes" onclick="forgive()">
-
-                YES ❤️
-
-            </button>
-
-            <button class="no" id="no" onclick="run()">
-
-                NO 😤
-
-            </button>
-
-        </div>
-
-    </div>
-
-
-    <div class="card win" id="win">
-
-        <div class="emoji">🥹💖</div>
-
-        <h2>YAYYYYY BABYYYY 😭❤️</h2>
-
-        <p>
-
-            Thank you for forgiving me,
-            my kaju katli 🥹💕<br><br>
-
-            I promise I'll be a better listener and a less chaotic sticker creature 😭<br><br>
-
-            Now come here 🫂❤️<br>
-
-            I love you × 10,000<br>
-
-
-        </p>
-
-    </div>
-
-
-
-    <div class="overlay" id="overlay">
-
-        <div class="popup">
-
-            <span id="e">
-                🥺
-            </span>
-
-            <h3 id="t">
-                Waittt
-            </h3>
-
-            <p id="m">
-                No button unavailable.
-                Try again.
-            </p>
-
-            <button onclick="closePop()">
-
-                Okay 😭
-
-            </button>
-
-        </div>
-
-    </div>
-
-    <script>
-
-        const popups = [
-
-            ["🥺",
-                "Babe please",
-                "I know I acted silly but I really am sorry."],
-
-            ["😭",
-                "Illegal click",
-                "The NO button refuses to cooperate."],
-
-            ["🐶",
-                "DOG REQUEST",
-                "This dog votes YES."],
-
-            ["🧎",
-                "Emotionally kneeling",
-                "Please reconsider 😭"],
-
-            ["❤️",
-                "I miss your smile",
-                "Please don't stay mad forever."]
-        ]
-
-        let count = 0
-
-        function run() {
-
-            let p =
-                popups[
-                count %
-                popups.length
-                ]
-
-            count++
-
-            e.textContent = p[0]
-            t.textContent = p[1]
-            m.textContent = p[2]
-
-            overlay.classList.add("show")
-
-        }
-
-        function closePop() {
-
-            overlay.classList.remove("show")
-
-        }
-
-        function forgive() {
-
-            main.style.display = "none"
-
-            win.style.display = "flex"
-
-        }
-
-    </script>
-
+<!-- Floating bg hearts -->
+<div class="bg-hearts" id="bgHearts"></div>
+
+<canvas id="confetti-canvas"></canvas>
+
+<!-- MAIN CARD -->
+<div class="card" id="main">
+  <span class="main-emoji">🥺</span>
+  <h1>Operation: Win Back Neha ❤️</h1>
+
+  <div class="message">
+    Heyy <strong>Neha</strong> ❤️🥺<br><br>
+    Okay… my <strong>sweetheart</strong>, my <strong>cupcake</strong>, my favourite human 😭❤️<br><br>
+    I owe you a real apology.<br><br>
+    I know you're angry and honestly… you have every right to be. I sent that stupid funny sticker thinking I was being cute and goofy 😭 but I completely missed that you actually wanted to talk properly.<br><br>
+    Instead of understanding you and being there for you, I kept acting silly and replying with stickers 🙈 That probably made you feel ignored or like I wasn't taking you seriously… and baby, that wasn't my intention at all 💔<br><br>
+    I wasn't trying to annoy you or make fun of your feelings. I just had terrible timing and handled the moment badly 😔<br><br>
+    You're important to me, <strong>pretty girl</strong>. More than my dumb sticker addiction 😭❤️<br><br>
+    So I'm genuinely sorry. Next time I'll listen first and activate boyfriend mode before comedian mode 🫡💖<br><br>
+    Please forgive me, <strong>baby</strong>? 🥺👉👈<br>
+    Your emotionally damaged sticker boy is waiting 😭❤️
+  </div>
+
+  <div class="tags">
+    <span class="tag">100% Genuine 🥺</span>
+    <span class="tag">Sticker-Free Apology 🚫📲</span>
+    <span class="tag">Boyfriend Mode: ON 🫡</span>
+  </div>
+
+  <div class="question">So… do you forgive me? 🥺</div>
+
+  <div class="btns">
+    <button class="yes" onclick="forgive()">YES ❤️</button>
+    <button class="no" id="noBtn" onclick="tryNo()" onmouseenter="escapeNo()">NO 😤</button>
+  </div>
+  <p class="fine-print">* No button may or may not be functional 🙂</p>
+</div>
+
+<!-- WIN CARD -->
+<div class="card win-card" id="win">
+  <span class="main-emoji" style="animation-duration:1.8s">🥹💖</span>
+  <h2>YAYYYYY BABYYYY 😭❤️</h2>
+  <p>
+    Thank you for forgiving me, my <strong style="color:var(--rose)">kaju katli</strong> 🥹💕<br><br>
+    I promise I'll be a better listener and a less chaotic sticker creature 😭<br><br>
+    Now come here 🫂❤️<br>
+    I love you × 10,000 🌸
+  </p>
+</div>
+
+<!-- POPUP OVERLAY -->
+<div class="overlay" id="overlay">
+  <div class="popup">
+    <span id="popEmoji">🥺</span>
+    <h3 id="popTitle">Waittt—</h3>
+    <p id="popMsg">No button is currently under maintenance.</p>
+    <button onclick="closePop()">Okay fine 😭</button>
+  </div>
+</div>
+
+<script>
+// --- Background floating hearts ---
+const bhc = document.getElementById('bgHearts');
+const bSyms = ['❤️','🩷','💕','💗','🌸','✨','💖'];
+for (let i = 0; i < 18; i++) {
+  const d = document.createElement('div');
+  d.className = 'bh';
+  d.textContent = bSyms[i % bSyms.length];
+  d.style.left = (Math.random()*100) + 'vw';
+  d.style.animationDuration = (8 + Math.random()*10) + 's';
+  d.style.animationDelay = (Math.random()*10) + 's';
+  d.style.fontSize = (14 + Math.random()*18) + 'px';
+  bhc.appendChild(d);
+}
+
+// --- Popup messages ---
+const popups = [
+  ["🥺","Babe please—","I know I acted silly but I really am sorry. The No button is lying to you."],
+  ["😭","ILLEGAL CLICK","The NO button has been reported to the Ministry of Forgiveness. Please reconsider."],
+  ["🐶","DOG EMERGENCY","This dog personally asked me to tell you to press YES. Don't disappoint the dog."],
+  ["🧎","Emotionally kneeling—","He is literally on his knees (emotionally). Please have mercy 😭"],
+  ["💀","No button: deceased","R.I.P No Button 2025–2025. Survived by YES, who misses you dearly."],
+  ["🫣","He built this page—","With his own two thumbs. For you. Probably on mobile. Please 🥺"],
+  ["❤️","I miss your smile","You look better when you're not mad at me. Just saying. Forgive? 🥺"],
+];
+let noCount = 0;
+let escaped = false;
+
+function escapeNo() {
+  if (escaped) return;
+  const btn = document.getElementById('noBtn');
+  const card = document.getElementById('main');
+  const cr = card.getBoundingClientRect();
+  const br = btn.getBoundingClientRect();
+  const maxX = cr.width - br.width - 32;
+  const rx = Math.floor(Math.random() * maxX) - (br.left - cr.left - 8);
+  const ry = Math.random() > 0.5 ? -40 : 30;
+  btn.style.transition = 'transform .22s ease';
+  btn.style.transform = `translate(${rx}px, ${ry}px)`;
+  escaped = true;
+  setTimeout(() => { escaped = false; }, 600);
+}
+
+function tryNo() {
+  const p = popups[noCount % popups.length]; noCount++;
+  document.getElementById('popEmoji').textContent = p[0];
+  document.getElementById('popTitle').textContent = p[1];
+  document.getElementById('popMsg').textContent   = p[2];
+  document.getElementById('overlay').classList.add('show');
+}
+
+function closePop() {
+  document.getElementById('overlay').classList.remove('show');
+  const btn = document.getElementById('noBtn');
+  btn.style.transform = 'translate(0,0)';
+}
+
+function forgive() {
+  document.getElementById('main').style.display = 'none';
+  const w = document.getElementById('win');
+  w.style.display = 'flex';
+  launchConfetti();
+}
+
+// --- Confetti ---
+function launchConfetti() {
+  const canvas = document.getElementById('confetti-canvas');
+  canvas.style.display = 'block';
+  canvas.width  = window.innerWidth;
+  canvas.height = window.innerHeight;
+  const ctx = canvas.getContext('2d');
+
+  const colors = ['#ff6b9d','#ff8c69','#ffeb3b','#a8e6cf','#d4a8ff','#ff9a9e','#ffd6e7','#fff176','#f48fb1'];
+  const pieces = [];
+
+  for (let i = 0; i < 160; i++) {
+    pieces.push({
+      x: Math.random() * canvas.width,
+      y: -20 - Math.random() * 200,
+      w: 7 + Math.random() * 8,
+      h: 7 + Math.random() * 8,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      rot: Math.random() * Math.PI * 2,
+      vx: (Math.random() - 0.5) * 3,
+      vy: 2.5 + Math.random() * 3.5,
+      vr: (Math.random() - 0.5) * 0.18,
+      shape: Math.random() > 0.5 ? 'rect' : 'circle',
+      alpha: 1,
+    });
+  }
+
+  let frame;
+  let start = null;
+  const duration = 4000;
+
+  function draw(ts) {
+    if (!start) start = ts;
+    const elapsed = ts - start;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    pieces.forEach(p => {
+      p.x  += p.vx;
+      p.y  += p.vy;
+      p.rot += p.vr;
+      if (elapsed > duration * 0.6) p.alpha = Math.max(0, p.alpha - 0.012);
+
+      ctx.save();
+      ctx.globalAlpha = p.alpha;
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.rot);
+      ctx.fillStyle = p.color;
+      if (p.shape === 'rect') {
+        ctx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
+      } else {
+        ctx.beginPath();
+        ctx.arc(0, 0, p.w/2, 0, Math.PI*2);
+        ctx.fill();
+      }
+      ctx.restore();
+    });
+
+    if (elapsed < duration) {
+      frame = requestAnimationFrame(draw);
+    } else {
+      canvas.style.display = 'none';
+      cancelAnimationFrame(frame);
+    }
+  }
+  requestAnimationFrame(draw);
+}
+</script>
 </body>
-
 </html>
